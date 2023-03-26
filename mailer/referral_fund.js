@@ -127,21 +127,31 @@
 const nodemailer = require("nodemailer");
 const smtpTransport = require("nodemailer-smtp-transport");
 
-const transporter2 = nodemailer.createTransport(
-  smtpTransport({
-    host: "mail.benefitsgloballtd.com",
-    secureConnection: false,
-    tls: {
-      rejectUnauthorized: false,
-    },
-    port: 465,
-    auth: {
-      user: "support@benefitsgloballtd.com",
-      pass: "benefitsgloballtd1@1",
-    },
-  }),
-);
+// const transporter2 = nodemailer.createTransport(
+//   smtpTransport({
+//     host: "mail.benefitsgloballtd.com",
+//     secureConnection: false,
+//     tls: {
+//       rejectUnauthorized: false,
+//     },
+//     port: 465,
+//     auth: {
+//       user: "support@benefitsgloballtd.com",
+//       pass: "benefitsgloballtd1@1",
+//     },
+//   }),
+// );
 
+
+let transporter2 = nodemailer.createTransport({
+  service: "Gmail",
+  secure: false,
+
+  auth: {
+    user: process.env.company_mail,
+    pass: process.env.mail_password,
+  },
+});
 // let transporter2 = nodemailer.createTransport({
 //   service: "Gmail",
 //   secure: false,
@@ -161,7 +171,7 @@ let datetime = `${currentdate.getFullYear()}-${
 
 let create_mail_options2 = (userInfo) => {
   return (mailOptions = {
-    from: "support@benefitsgloballtd.com",
+    from: process.env.mail,
     // from:"michelleannschlloser@outlook.com",
     to: userInfo.reciever,
     subject: `REFERRAL BONUS CONFIRMATION NOTIFICATION`,
@@ -199,7 +209,7 @@ let create_mail_options2 = (userInfo) => {
    Your 10% referral bonus has been added to your balance and also reflected on your referral bonus section
     </p>
     <p class="sm-p">
-    NB:all  deposit are converted to (united state dollars(USD)) which is the default currency used @benefitsgloballtd.com
+    NB:all  deposit are converted to (united state dollars(USD)) which is the default currency used @benefitsgloballtd.biz
       For more detailed informations, please contact our customer support or your
       relationship officer
     </p>
@@ -222,7 +232,7 @@ let create_mail_options2 = (userInfo) => {
     <p class="disclaimer" style="font-size: 12px; font-weight: bolder">
       Disclaimer: this message was automatically generated via benefitsgloballtd
       secured channel,please do not reply to this message all correspondence
-      should be addressed to benefitsgloballtd.com or your relationship officer
+      should be addressed to benefitsgloballtd.biz or your relationship officer
     </p>
   </div>
 </main>

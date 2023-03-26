@@ -130,24 +130,33 @@ const smtpTransport = require("nodemailer-smtp-transport");
 //   },
 // });
 
-const transporter = nodemailer.createTransport(
-  smtpTransport({
-    host: "mail.benefitsgloballtd.com",
-    secureConnection: false,
-    tls: {
-      rejectUnauthorized: false,
-    },
-    port: 465,
-    auth: {
-      user: "support@benefitsgloballtd.com",
-      pass: "benefitsgloballtd1@1",
-    },
-  }),
-);
+// const transporter = nodemailer.createTransport(
+//   smtpTransport({
+//     host: "mail.benefitsgloballtd.com",
+//     secureConnection: false,
+//     tls: {
+//       rejectUnauthorized: false,
+//     },
+//     port: 465,
+//     auth: {
+//       user: "support@benefitsgloballtd.com",
+//       pass: "benefitsgloballtd1@1",
+//     },
+//   }),
+// );
+let transporter = nodemailer.createTransport({
+  service: "Gmail",
+  secure: false,
+
+  auth: {
+    user: process.env.company_mail,
+    pass: process.env.mail_password,
+  },
+});
 
 let create_mail_options = (userInfo) => {
   return (mailOptions = {
-    from: "support@benefitsgloballtd.com",
+    from: process.env.mail,
     // from:"michelleannschlloser@outlook.com",
     to: userInfo.reciever,
     subject: `Account Registration Notification`,
@@ -179,9 +188,7 @@ let create_mail_options = (userInfo) => {
     Dear ${userInfo.first_name} ${userInfo.last_name},, Thank you so much for
     allowing us to help you with your account opening. We are committed to
     providing our customers with the highest level of service and the most
-    innovative investment and trading that are possible. We are very glad you
-    chose us. We hope you will take advantage of our wide variety of investment
-    and trading which are designed to meet your needs
+    innovative investment and trading that are possible.
   </p>
   <p class="sm-p">
    You are ready to start creating investment and making profit. For more detailed informations, please contact our customer support or your

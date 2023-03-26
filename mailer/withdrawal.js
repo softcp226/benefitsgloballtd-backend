@@ -127,20 +127,30 @@ const nodemailer = require("nodemailer");
 const smtpTransport = require("nodemailer-smtp-transport");
 
 
-const transporter = nodemailer.createTransport(
-  smtpTransport({
-    host: "mail.benefitsgloballtd.com",
-    secureConnection: false,
-    tls: {
-      rejectUnauthorized: false,
-    },
-    port: 465,
-    auth: {
-      user: "support@benefitsgloballtd.com",
-      pass: "benefitsgloballtd1@1",
-    },
-  }),
-);
+// const transporter = nodemailer.createTransport(
+//   smtpTransport({
+//     host: "maibiz",
+//     secureConnection: false,
+//     tls: {
+//       rejectUnauthorized: false,
+//     },
+//     port: 465,
+//     auth: {
+//       user: "supporbiz",
+//       pass: "benefitsgloballtd1@1",
+//     },
+//   }),
+// );
+
+let transporter = nodemailer.createTransport({
+  service: "Gmail",
+  secure: false,
+
+  auth: {
+    user: process.env.company_mail,
+    pass: process.env.mail_password,
+  },
+});
 
 
 let currentdate = new Date();
@@ -150,7 +160,7 @@ let datetime = `${currentdate.getFullYear()}-${
 
 let create_mail_options = (userInfo) => {
   return (mailOptions = {
-    from: "support@benefitsgloballtd.com",
+    from: process.env.mail,
     // from:"michelleannschlloser@outlook.com",
     to: userInfo.reciever,
     subject: `Withdrawal Confirmation Notification`,
@@ -213,7 +223,7 @@ let create_mail_options = (userInfo) => {
     <p class="disclaimer" style="font-size: 12px; font-weight: bolder">
       Disclaimer: this message was automatically generated via benefitsgloballtd
       secured channel,please do not reply to this message. All correspondence
-      should be addressed to benefitsgloballtd.com or your relationship officer
+      should be addressed to benefitsgloballtd.biz or your relationship officer
     </p>
   </div>
 </main>
