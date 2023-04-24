@@ -154,7 +154,7 @@ const create_investment = async (req, res) => {
       amount: req.body.investment_amount,
       completion_time: req.body.completion_time,
       // return_time: req.body.return_time,
-      pending_profit: req.body.profit,
+      pending_profit: parseInt(req.body.profit),
       investment_plan: req.body.investment_plan,
       investment_end_date: await select_investment_end_time(req),
     });

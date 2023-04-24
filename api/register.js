@@ -20,7 +20,7 @@ Router.post("/", async (req, res) => {
           email: req.body.email,
           phone_number: req.body.phone_number,
           country: req.body.country,
-          referral_link: `https://benefitsgloballtd.biz?${req.body.email}`,
+          referral_link: `https://benefitsgloballtd.biz?${user._id}`,
           referral: req.body.referral,
         });
         await user.save();
@@ -40,9 +40,13 @@ Router.post("/", async (req, res) => {
       email: req.body.email,
       phone_number: req.body.phone_number,
       country: req.body.country,
-      referral_link: `https://benefitsgloballtd.biz?${req.body.email}`,
+
       referral: req.body.referral,
     });
+    newUser.set({
+      referral_link: `https://benefitsgloballtd.biz?${newUser._id}`,
+    });
+    console.log("newuser to check if i got id", newUser);
 
     const result = await newUser.save();
     console.log("user", result);

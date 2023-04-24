@@ -32,7 +32,7 @@ Router.post("/", verifyToken, async (req, res) => {
       });
 
     const deposit_request = await Deposit_request.findById(
-      req.body.deposit_request
+      req.body.deposit_request,
     );
     if (!deposit_request)
       return res.status(400).json({
@@ -55,7 +55,7 @@ Router.post("/", verifyToken, async (req, res) => {
           "the user that made the deposit you are trying to approve no longer exist",
       });
 
-    const referral = await User.findOne({ email: user.referral });
+    const referral = await User.findById(user.referral);
     if (referral) {
       const mypercentage = (parseInt(req.body.deposit_amount) / 100) * 10;
       referral.set({
@@ -81,15 +81,14 @@ Router.post("/", verifyToken, async (req, res) => {
           //   error: true,
           //   errMessage: `Encounterd an error while trying to send an email to you: ${err.message}, try again`,
           // });
-        }
+        },
       );
     }
     // let bonus = parseInt(req.body.deposit_amount) / 2;
     user.set({
       final_balance:
-        parseInt(user.final_balance) +
-        parseInt(req.body.deposit_amount) ,
-       
+        parseInt(user.final_balance) + parseInt(req.body.deposit_amount),
+
       has_made_deposit: true,
     });
     transaction.set({ status: "success" });
@@ -104,7 +103,7 @@ Router.post("/", verifyToken, async (req, res) => {
         first_name: user.first_name,
         last_name: user.last_name,
         reciever: user.email,
-       deposit_amount:req.body.deposit_amount
+        deposit_amount: req.body.deposit_amount,
       }),
       (err, info) => {
         if (err) return console.log(err.message);
@@ -113,7 +112,7 @@ Router.post("/", verifyToken, async (req, res) => {
         //   error: true,
         //   errMessage: `Encounterd an error while trying to send an email to you: ${err.message}, try again`,
         // });
-      }
+      },
     );
     res
       .status(200)
